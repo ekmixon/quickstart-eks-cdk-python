@@ -143,28 +143,19 @@ class GhostStack(core.Stack):
         })
         ghost_external_secret.node.add_dependency(external_secrets_chart)
 
-        # Import ghost-deployment.yaml to a dictionary and submit it as a manifest to EKS
-        # Read the YAML file
-        ghost_deployment_yaml_file = open("ghost-deployment.yaml", 'r')
-        ghost_deployment_yaml = yaml.load(ghost_deployment_yaml_file, Loader=yaml.FullLoader)
-        ghost_deployment_yaml_file.close()
+        with open("ghost-deployment.yaml", 'r') as ghost_deployment_yaml_file:
+            ghost_deployment_yaml = yaml.load(ghost_deployment_yaml_file, Loader=yaml.FullLoader)
         #print(ghost_deployment_yaml)
         ghost_deployment_manifest = eks_cluster.add_manifest("GhostDeploymentManifest",ghost_deployment_yaml)
         ghost_deployment_manifest.node.add_dependency(ghost_external_secret)
 
-        # Import ghost-service.yaml to a dictionary and submit it as a manifest to EKS
-        # Read the YAML file
-        ghost_service_yaml_file = open("ghost-service.yaml", 'r')
-        ghost_service_yaml = yaml.load(ghost_service_yaml_file, Loader=yaml.FullLoader)
-        ghost_service_yaml_file.close()
+        with open("ghost-service.yaml", 'r') as ghost_service_yaml_file:
+            ghost_service_yaml = yaml.load(ghost_service_yaml_file, Loader=yaml.FullLoader)
         #print(ghost_service_yaml)
         eks_cluster.add_manifest("GhostServiceManifest",ghost_service_yaml)
 
-        # Import ghost-ingress.yaml to a dictionary and submit it as a manifest to EKS
-        # Read the YAML file
-        ghost_ingress_yaml_file = open("ghost-ingress.yaml", 'r')
-        ghost_ingress_yaml = yaml.load(ghost_ingress_yaml_file, Loader=yaml.FullLoader)
-        ghost_ingress_yaml_file.close()
+        with open("ghost-ingress.yaml", 'r') as ghost_ingress_yaml_file:
+            ghost_ingress_yaml = yaml.load(ghost_ingress_yaml_file, Loader=yaml.FullLoader)
         #print(ghost_ingress_yaml)
         eks_cluster.add_manifest("GhostIngressManifest",ghost_ingress_yaml)                
 

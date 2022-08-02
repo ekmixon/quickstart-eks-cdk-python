@@ -58,11 +58,11 @@ class EKSLogsObjectResource(core.Construct):
             }
         }
 
-        # api_version=None uses the latest api
-        on_create = custom_resources.AwsSdkCall(
+        return custom_resources.AwsSdkCall(
             action='updateClusterConfig',
             service='EKS',
             parameters=create_params,
-            physical_resource_id=custom_resources.PhysicalResourceId.of(f'{eks_name}Log-CR')
+            physical_resource_id=custom_resources.PhysicalResourceId.of(
+                f'{eks_name}Log-CR'
+            ),
         )
-        return on_create
